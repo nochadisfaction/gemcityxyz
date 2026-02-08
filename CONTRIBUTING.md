@@ -11,6 +11,7 @@ This theme was developed using [Cursor](https://cursor.sh/) (an AI-powered code 
 ### Reporting Bugs
 
 If you find a bug, please open an issue with:
+
 - A clear description of the bug
 - Steps to reproduce
 - Expected vs actual behavior
@@ -19,6 +20,7 @@ If you find a bug, please open an issue with:
 ### Suggesting Features
 
 Feature suggestions are welcome! Please open an issue with:
+
 - A clear description of the feature
 - Use case and motivation
 - Any implementation ideas (optional)

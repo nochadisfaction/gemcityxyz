@@ -6,7 +6,7 @@ The theme has been prepared and is ready for GitHub distribution.
 
 ## 📁 Structure
 
-```
+```bash
 merox-erudite/
 ├── src/                    # Source code
 │   ├── components/         # Astro & React components
@@ -66,6 +66,7 @@ merox-erudite/
 ## 🔧 Configuration Files
 
 All configuration files have been updated with default/generic values:
+
 - `src/consts.ts` - Site configuration
 - `astro.config.ts` - Site URL placeholder
 - `src/pages/index.astro` - Generic homepage
@@ -73,6 +74,7 @@ All configuration files have been updated with default/generic values:
 ## 📦 Ready for Distribution
 
 The theme is now:
+
 - ✅ Clean of personal content
 - ✅ Contains example content
 - ✅ Has default configurations
@@ -98,4 +100,3 @@ The theme is now:
 ---
 
 **Note:** This theme was developed using [Cursor](https://cursor.sh/) AI coding assistant. Full transparency is maintained in the README.
-

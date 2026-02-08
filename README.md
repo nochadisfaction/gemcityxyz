@@ -1,10 +1,6 @@
-<div align="center">
-
-## merox-erudite
+# merox-erudite
 
 [![License](https://img.shields.io/github/license/meroxdotdev/merox-erudite?color=0a0a0a&logo=github&logoColor=fff&style=for-the-badge)](LICENSE)
-
-</div>
 
 **merox-erudite** is a customized version of the [astro-erudite](https://github.com/jktrn/astro-erudite) theme, enhanced with additional features and modifications for a more complete blogging experience.
 
@@ -67,18 +63,21 @@ All features from astro-erudite plus:
 1. **Use this template** - Click the "Use this template" button to create a new repository
 
 2. **Clone the repository:**
+
    ```bash
    git clone https://github.com/[YOUR_USERNAME]/[YOUR_REPO_NAME].git
    cd [YOUR_REPO_NAME]
    ```
 
 3. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 4. **Configure environment variables** (optional):
    Create a `.env` file with:
+
    ```env
    # Newsletter (Brevo)
    BREVO_API_KEY=your-api-key
@@ -94,6 +93,7 @@ All features from astro-erudite plus:
    ```
 
 5. **Start the development server:**
+
    ```bash
    npm run dev
    ```
@@ -215,12 +215,14 @@ This project is open source and available under the [MIT License](LICENSE).
 **Important Note:** This theme was developed exclusively using [Cursor](https://cursor.sh/) (an AI-powered code editor) with paid subscription. I am not a programmer by profession—I'm a System Administrator with a passion for sharing knowledge through blogging.
 
 The development process involved:
+
 - Iterative conversations with Cursor's AI assistant
 - Learning and understanding code through AI explanations
 - Testing and refining features with AI guidance
 - Building on the excellent foundation of astro-erudite
 
 This transparency is important because:
+
 1. **Honesty** - You should know how this theme was created
 2. **Accessibility** - It demonstrates that you don't need to be a professional developer to create useful tools
 3. **AI-Assisted Development** - Shows the potential of AI coding assistants for non-programmers
@@ -259,4 +261,3 @@ For comprehensive documentation, detailed feature explanations, and the original
 Built with ❤️ by [merox](https://merox.dev)
 
 *Developed using [Cursor](https://cursor.sh/) AI coding assistant*
-
