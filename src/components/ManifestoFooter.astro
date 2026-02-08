@@ -1,0 +1,53 @@
+---
+import Link from '@/components/Link.astro'
+import { getRandomQuote } from '@/lib/manifesto-quotes'
+import { cn } from '@/lib/utils'
+
+const quote = getRandomQuote()
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div
+  class={cn(
+    'w-full border-t border-border/50 bg-gradient-to-r from-muted/30 via-background to-muted/30 py-6',
+    className
+  )}
+>
+  <div class="mx-auto max-w-3xl px-4">
+    <blockquote class="relative">
+      {/* Decorative quote mark */}
+      <span
+        class="absolute -left-2 -top-2 text-4xl text-primary/20 font-serif select-none"
+        aria-hidden="true"
+      >"</span>
+
+      <p
+        class="text-sm md:text-base text-muted-foreground italic leading-relaxed pl-4 border-l-2 border-primary/30"
+      >
+        {quote.text}
+      </p>
+
+      <footer class="mt-3 flex items-center gap-2 text-xs text-muted-foreground/70 pl-4">
+        <span>— from</span>
+        <Link
+          href={quote.url}
+          class="hover:text-primary transition-colors underline underline-offset-2"
+        >
+          {quote.source}
+        </Link>
+        <span class="text-muted-foreground/40">|</span>
+        <span class="text-muted-foreground/50 italic">refresh for another</span>
+      </footer>
+
+      {/* Refresh hint - hidden but accessible */}
+      <span class="sr-only">
+        Reload the page to see a different quote from Vivi's writing.
+      </span>
+    </blockquote>
+  </div>
+</div>
