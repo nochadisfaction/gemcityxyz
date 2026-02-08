@@ -1,13 +1,13 @@
 {
-  "name": "merox-erudite",
+  "name": "gemcity",
   "type": "module",
   "version": "1.0.0",
-  "description": "An enhanced version of astro-erudite with newsletter integration, Disqus comments, analytics support, and additional features",
-  "author": "merox",
+  "description": "Gem City — Vivi's digital embassy for tech discourse, AI exploration, and forward-thinking insurrection.",
+  "author": "vivi (chadisfaction)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/meroxdotdev/merox-erudite.git"
+    "url": "https://github.com/chadisfaction/gemcity.xyz.git"
   },
   "keywords": [
     "astro",
