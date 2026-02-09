@@ -1,0 +1,44 @@
+---
+// Secret easter egg page - only accessible via portfolio terminal
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
+---
+
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Easter Egg" description="You found the secret." />
+  
+  <section class="flex flex-col gap-8 min-h-[60vh] items-center justify-center text-center">
+    <div class="space-y-6">
+      <div class="text-6xl animate-bounce">🥚</div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold">You Found It</h1>
+      
+      <p class="text-lg text-muted-foreground max-w-md mx-auto">
+        This page doesn't appear in any navigation. You got here through the portfolio terminal.
+      </p>
+      
+      <div class="bg-muted/30 border border-border/50 rounded-lg p-6 max-w-lg mx-auto">
+        <p class="text-sm text-muted-foreground mb-4">
+          "The best systems have hidden depths. Easter eggs aren't just for games — 
+          they're reminders that technology can still surprise us."
+        </p>
+        <p class="text-xs text-muted-foreground/70">— Vivi</p>
+      </div>
+      
+      <div class="pt-4">
+        <a 
+          href="/" 
+          class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+        >
+          <Icon name="lucide:arrow-left" class="size-4" />
+          Return to the surface
+        </a>
+      </div>
+    </div>
+    
+    <div class="text-xs text-muted-foreground/50 font-mono">
+      Secret code: PORTFOLIO-TERMINAL-ACCESS-GRANTED
+    </div>
+  </section>
+</Layout>
