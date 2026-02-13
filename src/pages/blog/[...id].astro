@@ -328,14 +328,21 @@ try {
 					window.scrollTo({ top: 0, behavior: 'smooth' })
 				})
 
+				let tick = false
 				window.addEventListener('scroll', () => {
-					const footerRect = footer.getBoundingClientRect()
-					const isFooterVisible = footerRect.top <= window.innerHeight
+					if (!tick) {
+						window.requestAnimationFrame(() => {
+							const footerRect = footer.getBoundingClientRect()
+							const isFooterVisible = footerRect.top <= window.innerHeight
 
-					scrollToTopButton.classList.toggle(
-						'hidden',
-						window.scrollY <= 300 || isFooterVisible
-					)
+							scrollToTopButton.classList.toggle(
+								'hidden',
+								window.scrollY <= 300 || isFooterVisible
+							)
+							tick = false
+						})
+						tick = true
+					}
 				})
 			}
 		})
@@ -343,13 +350,15 @@ try {
 </Layout>
 
 <script>
-	if (document.querySelector('.katex')) {
-		if (!document.querySelector('link[href*="katex.min.css"]')) {
-			const link = document.createElement('link')
-			link.rel = 'stylesheet'
-			link.href =
-				'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css'
-			document.head.appendChild(link)
+	document.addEventListener('astro:page-load', () => {
+		if (document.querySelector('.katex')) {
+			if (!document.querySelector('link[href*="katex.min.css"]')) {
+				const link = document.createElement('link')
+				link.rel = 'stylesheet'
+				link.href =
+					'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css'
+				document.head.appendChild(link)
+			}
 		}
-	}
+	})
 </script>

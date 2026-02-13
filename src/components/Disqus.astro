@@ -85,9 +85,9 @@ const pageUrl = url || Astro.url.href
 		}
 
 		// Show error message if loading fails
-		const showError = () => {
+		const showError = (message = 'Unable to load comments.') => {
 			if (loadingIndicator) {
-				loadingIndicator.innerHTML = `<span class="text-muted-foreground">Unable to load comments. <a href="https://disqus.com/?ref_noscript" class="underline">View comments on Disqus</a>.</span>`
+				loadingIndicator.innerHTML = `<span class="text-muted-foreground">${message} <a href="https://disqus.com/?ref_noscript" class="underline">View comments on Disqus</a>.</span>`
 				loadingIndicator.setAttribute('role', 'alert')
 			}
 		}

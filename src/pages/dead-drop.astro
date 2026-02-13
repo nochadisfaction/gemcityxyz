@@ -27,86 +27,114 @@ import { Icon } from 'astro-icon/components'
 			</div>
 		</div>
 
-		<div class="prose prose-sm dark:prose-invert max-w-none space-y-6">
-			<div class="bg-muted/30 border-border/50 rounded-lg border p-4">
-				<p class="text-muted-foreground text-sm leading-relaxed">
-					For sensitive communications — security research, activist
-					coordination, or anything that shouldn't go through normal channels.
-				</p>
-			</div>
-
-			<div
-				class="mb-6 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4"
-			>
-				<p
-					class="flex items-center gap-2 text-sm font-medium text-yellow-600 dark:text-yellow-400"
-				>
-					<Icon name="lucide:alert-triangle" class="size-4" />
-					Placeholder Key Warning
-				</p>
-				<p class="mt-1 text-xs text-yellow-600/80 dark:text-yellow-400/80">
-					The PGP key block below is currently a placeholder for theme
-					demonstration. Do not use this key for sensitive communication until
-					it is replaced with a verified public key.
-				</p>
-			</div>
-
-			<h2 class="text-xl font-semibold">Current Key</h2>
-
-			<div
-				class="overflow-x-auto rounded-lg bg-black p-4 font-mono text-xs text-green-400"
-			>
-				<pre class="break-all whitespace-pre-wrap">{DEAD_DROP.keyBlock}</pre>
-			</div>
-
-			<div class="flex items-center gap-2 text-sm">
-				<span class="text-muted-foreground">Fingerprint:</span>
-				<code class="bg-muted rounded px-2 py-1 text-xs"
-					>{DEAD_DROP.fingerprint}</code
-				>
-			</div>
-
-			<h2 class="mt-8 text-xl font-semibold">How To Use</h2>
-
-			<ol class="text-muted-foreground list-decimal space-y-3 pl-4">
-				<li>
-					<strong class="text-foreground">Import the key</strong>
-					<p class="mt-1 text-sm">
-						Download the public key above and import it into your PGP tool (GPG,
-						Kleopatra, or ProtonMail).
+		{
+			!DEAD_DROP.enabled ?
+				<div class="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-6 text-center">
+					<Icon
+						name="lucide:construction"
+						class="mx-auto mb-4 size-12 text-yellow-600 dark:text-yellow-400"
+					/>
+					<h2 class="text-xl font-bold text-yellow-600 dark:text-yellow-400">
+						Feature Disabled
+					</h2>
+					<p class="text-muted-foreground mt-2">
+						The Dead Drop is currently disabled pending key rotation. Please
+						check back later or use standard channels for non-sensitive
+						inquiries.
 					</p>
-				</li>
-				<li>
-					<strong class="text-foreground">Compose your message</strong>
-					<p class="mt-1 text-sm">
-						Write your message locally. Include a way for me to reply if needed.
-					</p>
-				</li>
-				<li>
-					<strong class="text-foreground">Encrypt and send</strong>
-					<p class="mt-1 text-sm">
-						Encrypt to the above key, then email to: <code
-							class="bg-muted rounded px-1">{DEAD_DROP.email}</code
-						>
-					</p>
-				</li>
-			</ol>
+					<div class="mt-6">
+						<Link href="/" class={buttonVariants({ variant: 'outline' })}>
+							<Icon name="lucide:arrow-left" class="mr-2 size-4" />
+							Back to home
+						</Link>
+					</div>
+				</div>
+			:	<div class="prose prose-sm dark:prose-invert max-w-none space-y-6">
+					<div class="bg-muted/30 border-border/50 rounded-lg border p-4">
+						<p class="text-muted-foreground text-sm leading-relaxed">
+							For sensitive communications — security research, activist
+							coordination, or anything that shouldn't go through normal
+							channels.
+						</p>
+					</div>
 
-			<div class="border-border mt-8 border-t pt-6">
-				<h3 class="mb-3 text-lg font-semibold">Key Rotation</h3>
-				<p class="text-muted-foreground text-sm">
-					This key rotates quarterly. Check back here for the latest key before
-					sending sensitive material. Old keys are kept active for 30 days after
-					rotation.
-				</p>
-			</div>
+					<div class="mb-6 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4">
+						<p class="flex items-center gap-2 text-sm font-medium text-yellow-600 dark:text-yellow-400">
+							<Icon name="lucide:alert-triangle" class="size-4" />
+							Placeholder Key Warning
+						</p>
+						<p class="mt-1 text-xs text-yellow-600/80 dark:text-yellow-400/80">
+							The PGP key block below is currently a placeholder for theme
+							demonstration. Do not use this key for sensitive communication
+							until it is replaced with a verified public key.
+						</p>
+					</div>
 
-			<div class="flex items-center gap-2 pt-4">
-				<Link href="/" class={buttonVariants({ variant: 'outline' })}>
-					<Icon name="lucide:arrow-left" class="mr-2 size-4" />
-					Back to home
-				</Link>
-			</div>
-		</div>
+					<h2 class="text-xl font-semibold">Current Key</h2>
+
+					<div class="overflow-x-auto rounded-lg bg-black p-4 font-mono text-xs text-green-400">
+						<pre class="break-all whitespace-pre-wrap">
+							{DEAD_DROP.keyBlock}
+						</pre>
+					</div>
+
+					<div class="flex items-center gap-2 text-sm">
+						<span class="text-muted-foreground">Fingerprint:</span>
+						<code class="bg-muted rounded px-2 py-1 text-xs">
+							{DEAD_DROP.fingerprint}
+						</code>
+					</div>
+
+					<h2 class="mt-8 text-xl font-semibold">How To Use</h2>
+
+					<ol class="text-muted-foreground list-decimal space-y-3 pl-4">
+						<li>
+							<strong class="text-foreground">Import the key</strong>
+							<p class="mt-1 text-sm">
+								Download the public key above and import it into your PGP tool
+								(GPG, Kleopatra, or ProtonMail).
+							</p>
+						</li>
+						<li>
+							<strong class="text-foreground">Compose your message</strong>
+							<p class="mt-1 text-sm">
+								Write your message locally. Include a way for me to reply if
+								needed.
+							</p>
+						</li>
+						<li>
+							<strong class="text-foreground">Encrypt and send</strong>
+							<p class="mt-1 text-sm">
+								Encrypt to the above key, then email to:{' '}
+								<code class="bg-muted rounded px-1" id="dd-email">
+									[Loading...]
+								</code>
+								<script is:inline define:vars={{ email: DEAD_DROP.email }}>
+									const el = document.getElementById('dd-email');
+									if (el) {
+										el.innerText = email;
+									}
+								</script>
+							</p>
+						</li>
+					</ol>
+
+					<div class="border-border mt-8 border-t pt-6">
+						<h3 class="mb-3 text-lg font-semibold">Key Rotation</h3>
+						<p class="text-muted-foreground text-sm">
+							This key rotates quarterly. Check back here for the latest key
+							before sending sensitive material. Old keys are kept active for 30
+							days after rotation.
+						</p>
+					</div>
+
+					<div class="flex items-center gap-2 pt-4">
+						<Link href="/" class={buttonVariants({ variant: 'outline' })}>
+							<Icon name="lucide:arrow-left" class="mr-2 size-4" />
+							Back to home
+						</Link>
+					</div>
+				</div>
+		}
 	</section>
 </Layout>

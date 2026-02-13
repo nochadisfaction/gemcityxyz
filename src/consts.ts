@@ -93,6 +93,7 @@ export const NEWSLETTER_CONSENT_TEXT = {
 
 // Dead Drop Security Configuration
 export const DEAD_DROP = {
+  enabled: false,
   email: 'dead-drop@gemcity.xyz',
   fingerprint: 'A1B2 C3D4 E5F6 7890 1234 5678 90AB CDEF',
   keyBlock: `-----BEGIN PGP PUBLIC KEY BLOCK-----

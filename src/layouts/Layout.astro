@@ -24,10 +24,7 @@ const { class: className } = Astro.props
 	<Head>
 		<slot name="head" />
 	</Head>
-	<body
-		class="flex h-fit min-h-screen flex-col gap-y-6 font-sans"
-		transition:persist
-	>
+	<body class="flex h-fit min-h-screen flex-col gap-y-6 font-sans">
 		<!-- Skip to main content link for accessibility -->
 		<a
 			href="#main-content"
@@ -66,17 +63,6 @@ const { class: className } = Astro.props
 					return currentPath === targetPath && !href.includes('#')
 				}
 
-				// Handle touch events first (mobile) - must be non-passive to prevent default
-				function handleTouchStart(e) {
-					const link = e.target.closest('a[data-internal-link="true"]')
-					if (link && shouldPreventNavigation(link)) {
-						e.preventDefault()
-						e.stopPropagation()
-						e.stopImmediatePropagation()
-						return false
-					}
-				}
-
 				// Handle click events (desktop and mobile fallback)
 				function handleClick(e) {
 					const link = e.target.closest('a[data-internal-link="true"]')
@@ -89,11 +75,6 @@ const { class: className } = Astro.props
 				}
 
 				// Use capture phase to intercept before Astro's view transitions
-				// Touch events must be non-passive to allow preventDefault
-				document.addEventListener('touchstart', handleTouchStart, {
-					passive: false,
-					capture: true
-				})
 				document.addEventListener('click', handleClick, true)
 			})()
 		</script>
