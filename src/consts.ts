@@ -1,11 +1,11 @@
 import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
-  title: 'Your Blog Name',
+  title: 'Gem City',
   description:
-    'A brief description of your blog. This will be used in meta tags and social sharing.',
-  href: 'https://yourdomain.com',
-  author: 'your-author-id',
+    "Code. Chaos. Consciousness. Vivi's digital embassy for tech discourse, AI exploration, and forward-thinking insurrection.",
+  href: 'https://gemcity.xyz',
+  author: 'vivi',
   locale: 'en-US',
   featuredPostCount: 2,
   postsPerPage: 6,
@@ -47,6 +47,10 @@ export const NAV_LINKS: SocialLink[] = [
     label: 'Blog',
   },
   {
+    href: '/projects',
+    label: 'Projects',
+  },
+  {
     href: '/about',
     label: 'About',
   },
@@ -54,15 +58,15 @@ export const NAV_LINKS: SocialLink[] = [
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: 'https://github.com/username',
+    href: 'https://github.com/chadisfaction',
     label: 'GitHub',
   },
   {
-    href: 'https://twitter.com/username',
+    href: 'https://twitter.com/chadisfaction',
     label: 'Twitter',
   },
   {
-    href: 'mailto:your@email.com',
+    href: 'mailto:chad@gemcity.xyz',
     label: 'Email',
   },
   {
@@ -85,4 +89,16 @@ export const NEWSLETTER_CONSENT_TEXT = {
   text: 'I agree to receive newsletter emails.',
   privacyLink: '/privacy',
   privacyText: 'Privacy Policy',
+}
+
+// Dead Drop Security Configuration
+export const DEAD_DROP = {
+  enabled: false,
+  email: 'dead-drop@gemcity.xyz',
+  fingerprint: 'A1B2 C3D4 E5F6 7890 1234 5678 90AB CDEF',
+  keyBlock: `-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQINBGcKj7MBEAC5...
+[Key fingerprint: A1B2 C3D4 E5F6 7890 1234 5678 90AB CDEF]
+-----END PGP PUBLIC KEY BLOCK-----`,
 }

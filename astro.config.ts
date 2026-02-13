@@ -19,8 +19,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  site: 'https://yourdomain.com', // Update with your domain
-  // Static output - API routes are handled by Cloudflare Pages Functions in /functions folder
+  site: 'https://gemcity.xyz',
   integrations: [
     expressiveCode({
       themes: ['github-light', 'github-dark'],
@@ -71,8 +70,6 @@ export default defineConfig({
     icon(),
   ],
   vite: {
-    // Type assertion needed due to Vite plugin type incompatibility between Astro and @tailwindcss/vite
-    // This is the recommended approach per Astro documentation for Vite plugins
     plugins: [tailwindcss() as any],
   },
   server: {

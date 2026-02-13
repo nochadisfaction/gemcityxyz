@@ -1,20 +1,20 @@
 ---
 interface Props {
-  identifier: string
-  title: string
-  url?: string
+	identifier: string
+	title: string
+	url?: string
 }
 
 const { identifier, title, url } = Astro.props
 // Get shortname from build-time env var, with fallback for client-side check
-const disqusShortname = import.meta.env.PUBLIC_DISQUS_SHORTNAME || 'merox'
+const disqusShortname = import.meta.env.PUBLIC_DISQUS_SHORTNAME || ''
 
 // Sanitize inputs to prevent XSS
 const sanitize = (str: string) => {
-  return str
-    .replace(/[<>]/g, '') // Remove potential HTML tags
-    .trim()
-    .substring(0, 200) // Limit length
+	return str
+		.replace(/[<>]/g, '') // Remove potential HTML tags
+		.trim()
+		.substring(0, 200) // Limit length
 }
 
 const safeIdentifier = sanitize(identifier)
@@ -22,220 +22,217 @@ const safeTitle = sanitize(title)
 const pageUrl = url || Astro.url.href
 ---
 
-<section
-  id="disqus-section"
-  class="mt-12"
-  aria-label="Comments section"
->
-  <div id="disqus_thread" class="min-h-[200px]"></div>
-  
-  <!-- Loading indicator (hidden once Disqus loads) -->
-  <div
-    id="disqus-loading"
-    class="flex items-center justify-center py-8 text-sm text-muted-foreground"
-    aria-live="polite"
-    aria-label="Loading comments"
-  >
-    <span>Loading comments...</span>
-  </div>
+<section id="disqus-section" class="mt-12" aria-label="Comments section">
+	<div id="disqus_thread" class="min-h-[200px]"></div>
+
+	<!-- Loading indicator (hidden once Disqus loads) -->
+	<div
+		id="disqus-loading"
+		class="text-muted-foreground flex items-center justify-center py-8 text-sm"
+		aria-live="polite"
+		aria-label="Loading comments"
+	>
+		<span>Loading comments...</span>
+	</div>
 </section>
 
 <script
-  is:inline
-  define:vars={{
-    disqusShortname,
-    identifier: safeIdentifier,
-    pageUrl,
-    title: safeTitle,
-  }}
+	is:inline
+	define:vars={{
+		disqusShortname,
+		identifier: safeIdentifier,
+		pageUrl,
+		title: safeTitle
+	}}
 >
-  /**
-   * Disqus Comments Integration
-   * Best practices implementation:
-   * - Lazy loading with Intersection Observer
-   * - Error handling
-   * - View transition support (Astro)
-   * - Accessibility improvements
-   * - Performance optimized
-   */
-  (function() {
-    'use strict'
+	/**
+	 * Disqus Comments Integration
+	 * Best practices implementation:
+	 * - Lazy loading with Intersection Observer
+	 * - Error handling
+	 * - View transition support (Astro)
+	 * - Accessibility improvements
+	 * - Performance optimized
+	 */
+	;(function () {
+		'use strict'
 
-    // Get shortname - check env var first, then fallback
-    const shortname = disqusShortname || 'merox'
-    
-    if (!shortname || shortname === '') {
-      console.warn('Disqus shortname not configured')
-      if (loadingIndicator) {
-        loadingIndicator.innerHTML = '<span class="text-muted-foreground">Comments not configured.</span>'
-      }
-      return
-    }
+		let isLoaded = false
+		let isLoading = false
 
-    let isLoaded = false
-    let isLoading = false
+		let disqusContainer = document.getElementById('disqus_thread')
+		let loadingIndicator = document.getElementById('disqus-loading')
 
-    const disqusContainer = document.getElementById('disqus_thread')
-    const loadingIndicator = document.getElementById('disqus-loading')
-    
-    if (!disqusContainer) return
+		// Get shortname - check env var first, then fallback
+		const shortname = disqusShortname || ''
 
-    // Hide loading indicator once Disqus loads
-    const hideLoading = () => {
-      if (loadingIndicator) {
-        loadingIndicator.style.display = 'none'
-      }
-    }
+		if (!shortname || shortname === '') {
+			console.warn('Disqus shortname not configured')
+			if (loadingIndicator) {
+				loadingIndicator.innerHTML =
+					'<span class="text-muted-foreground">Comments not configured.</span>'
+			}
+			return
+		}
 
-    // Show error message if loading fails
-    const showError = () => {
-      if (loadingIndicator) {
-        loadingIndicator.innerHTML = `<span class="text-muted-foreground">Unable to load comments. <a href="https://disqus.com/?ref_noscript" class="underline">View comments on Disqus</a>.</span>`
-        loadingIndicator.setAttribute('role', 'alert')
-      }
-    }
+		if (!disqusContainer) return
 
-    // Load Disqus script
-    const loadDisqus = () => {
-      // Prevent multiple loads
-      if (isLoading || isLoaded) {
-        return
-      }
+		// Hide loading indicator once Disqus loads
+		const hideLoading = () => {
+			if (loadingIndicator) {
+				loadingIndicator.style.display = 'none'
+			}
+		}
 
-      isLoading = true
+		// Show error message if loading fails
+		const showError = (message = 'Unable to load comments.') => {
+			if (loadingIndicator) {
+				loadingIndicator.innerHTML = `<span class="text-muted-foreground">${message} <a href="https://disqus.com/?ref_noscript" class="underline">View comments on Disqus</a>.</span>`
+				loadingIndicator.setAttribute('role', 'alert')
+			}
+		}
 
-      // Check if Disqus is already loaded
-      if (window.DISQUS) {
-        try {
-          window.DISQUS.reset({
-            reload: true,
-            config: function () {
-              this.page.identifier = identifier
-              this.page.url = pageUrl
-              this.page.title = title
-            }
-          })
-          isLoaded = true
-          hideLoading()
-          isLoading = false
-          return
-        } catch (error) {
-          console.error('Disqus reset error:', error)
-          showError('Failed to load comments')
-          isLoading = false
-          return
-        }
-      }
+		// Load Disqus script
+		const loadDisqus = () => {
+			// Prevent multiple loads
+			if (isLoading || isLoaded) {
+				return
+			}
 
-      // Create and load Disqus script
-      try {
-        const script = document.createElement('script')
-        script.src = `https://${shortname}.disqus.com/embed.js`
-        script.async = true
-        script.setAttribute('data-timestamp', Date.now().toString())
-        
-        // Error handling
-        script.onerror = () => {
-          isLoading = false
-          showError('Failed to load Disqus script')
-        }
+			isLoading = true
 
-        // Success handling
-        script.onload = () => {
-          isLoaded = true
-          hideLoading()
-          isLoading = false
-        }
+			// Check if Disqus is already loaded
+			if (window.DISQUS) {
+				try {
+					window.DISQUS.reset({
+						reload: true,
+						config: function () {
+							this.page.identifier = identifier
+							this.page.url = pageUrl
+							this.page.title = title
+						}
+					})
+					isLoaded = true
+					hideLoading()
+					isLoading = false
+					return
+				} catch (error) {
+					console.error('Disqus reset error:', error)
+					showError('Failed to load comments')
+					isLoading = false
+					return
+				}
+			}
 
-        // Append to document
-        const target = document.head || document.body
-        if (target) {
-          target.appendChild(script)
-        } else {
-          showError('Unable to initialize Disqus')
-          isLoading = false
-        }
-      } catch (error) {
-        console.error('Disqus initialization error:', error)
-        showError('Failed to initialize comments')
-        isLoading = false
-      }
-    }
+			// Create and load Disqus script
+			try {
+				const script = document.createElement('script')
+				script.src = `https://${shortname}.disqus.com/embed.js`
+				script.async = true
+				script.setAttribute('data-timestamp', Date.now().toString())
 
-    // Intersection Observer for lazy loading
-    const initObserver = () => {
-      // Check if IntersectionObserver is supported
-      if (!('IntersectionObserver' in window)) {
-        // Fallback: load immediately if IntersectionObserver not supported
-        loadDisqus()
-        return
-      }
+				// Error handling
+				script.onerror = () => {
+					isLoading = false
+					showError('Failed to load Disqus script')
+				}
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !isLoaded && !isLoading) {
-              loadDisqus()
-              observer.disconnect()
-            }
-          })
-        },
-        {
-          rootMargin: '200px', // Start loading 200px before visible
-          threshold: 0.1,
-        }
-      )
+				// Success handling
+				script.onload = () => {
+					isLoaded = true
+					hideLoading()
+					isLoading = false
+				}
 
-      observer.observe(disqusContainer)
-    }
+				// Append to document
+				const target = document.head || document.body
+				if (target) {
+					target.appendChild(script)
+				} else {
+					showError('Unable to initialize Disqus')
+					isLoading = false
+				}
+			} catch (error) {
+				console.error('Disqus initialization error:', error)
+				showError('Failed to initialize comments')
+				isLoading = false
+			}
+		}
 
-    // Initialize on page load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initObserver)
-    } else {
-      initObserver()
-    }
+		// Intersection Observer for lazy loading
+		const initObserver = () => {
+			if (!disqusContainer) return
 
-    // Handle Astro view transitions
-    if (typeof window !== 'undefined') {
-      // Reset on page navigation (Astro view transitions)
-      document.addEventListener('astro:page-load', () => {
-        isLoaded = false
-        isLoading = false
-        if (loadingIndicator) {
-          loadingIndicator.style.display = 'flex'
-          loadingIndicator.innerHTML = '<span>Loading comments...</span>'
-        }
-        // Re-initialize observer for new page
-        setTimeout(initObserver, 100)
-      })
+			// Check if IntersectionObserver is supported
+			if (!('IntersectionObserver' in window)) {
+				// Fallback: load immediately if IntersectionObserver not supported
+				loadDisqus()
+				return
+			}
 
-      // Also handle after-swap for compatibility
-      document.addEventListener('astro:after-swap', () => {
-        isLoaded = false
-        isLoading = false
-        if (loadingIndicator) {
-          loadingIndicator.style.display = 'flex'
-          loadingIndicator.innerHTML = '<span>Loading comments...</span>'
-        }
-        setTimeout(initObserver, 100)
-      })
-    }
-  })()
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting && !isLoaded && !isLoading) {
+							loadDisqus()
+							observer.disconnect()
+						}
+					})
+				},
+				{
+					rootMargin: '200px', // Start loading 200px before visible
+					threshold: 0.1
+				}
+			)
+
+			observer.observe(disqusContainer)
+		}
+
+		// Initialize on page load
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initObserver)
+		} else {
+			initObserver()
+		}
+
+		// Handle Astro view transitions
+		if (typeof window !== 'undefined') {
+			const resetDisqus = () => {
+				isLoaded = false
+				isLoading = false
+				disqusContainer = document.getElementById('disqus_thread')
+				loadingIndicator = document.getElementById('disqus-loading')
+
+				if (loadingIndicator) {
+					loadingIndicator.style.display = 'flex'
+					loadingIndicator.innerHTML = '<span>Loading comments...</span>'
+				}
+				if (disqusContainer) {
+					setTimeout(initObserver, 100)
+				}
+			}
+
+			// Reset on page navigation (Astro view transitions)
+			document.addEventListener('astro:page-load', resetDisqus)
+			document.addEventListener('astro:after-swap', resetDisqus)
+		}
+	})()
 </script>
 
 <noscript>
-  <div class="mt-12 rounded-lg border bg-muted/50 p-6 text-center text-sm text-muted-foreground">
-    <p>
-      Please enable JavaScript to view the{' '}
-      <a
-        href="https://disqus.com/?ref_noscript"
-        class="underline hover:text-foreground"
-        rel="noopener noreferrer"
-      >
-        comments powered by Disqus
-      </a>
-      .
-    </p>
-  </div>
+	<div
+		class="bg-muted/50 text-muted-foreground mt-12 rounded-lg border p-6 text-center text-sm"
+	>
+		<p>
+			Please enable JavaScript to view the{' '}
+			<a
+				href="https://disqus.com/?ref_noscript"
+				class="hover:text-foreground underline"
+				rel="noopener noreferrer"
+			>
+				comments powered by Disqus
+			</a>
+			.
+		</p>
+	</div>
 </noscript>
