@@ -57,6 +57,12 @@ const pageUrl = url || Astro.url.href
 	;(function () {
 		'use strict'
 
+		let isLoaded = false
+		let isLoading = false
+
+		let disqusContainer = document.getElementById('disqus_thread')
+		let loadingIndicator = document.getElementById('disqus-loading')
+
 		// Get shortname - check env var first, then fallback
 		const shortname = disqusShortname || ''
 
@@ -68,12 +74,6 @@ const pageUrl = url || Astro.url.href
 			}
 			return
 		}
-
-		let isLoaded = false
-		let isLoading = false
-
-		const disqusContainer = document.getElementById('disqus_thread')
-		const loadingIndicator = document.getElementById('disqus-loading')
 
 		if (!disqusContainer) return
 
@@ -196,26 +196,37 @@ const pageUrl = url || Astro.url.href
 		// Handle Astro view transitions
 		if (typeof window !== 'undefined') {
 			// Reset on page navigation (Astro view transitions)
+			// Reset on page navigation (Astro view transitions)
 			document.addEventListener('astro:page-load', () => {
 				isLoaded = false
 				isLoading = false
+				disqusContainer = document.getElementById('disqus_thread')
+				loadingIndicator = document.getElementById('disqus-loading')
+
 				if (loadingIndicator) {
 					loadingIndicator.style.display = 'flex'
 					loadingIndicator.innerHTML = '<span>Loading comments...</span>'
 				}
 				// Re-initialize observer for new page
-				setTimeout(initObserver, 100)
+				if (disqusContainer) {
+					setTimeout(initObserver, 100)
+				}
 			})
 
 			// Also handle after-swap for compatibility
 			document.addEventListener('astro:after-swap', () => {
 				isLoaded = false
 				isLoading = false
+				disqusContainer = document.getElementById('disqus_thread')
+				loadingIndicator = document.getElementById('disqus-loading')
+
 				if (loadingIndicator) {
 					loadingIndicator.style.display = 'flex'
 					loadingIndicator.innerHTML = '<span>Loading comments...</span>'
 				}
-				setTimeout(initObserver, 100)
+				if (disqusContainer) {
+					setTimeout(initObserver, 100)
+				}
 			})
 		}
 	})()

@@ -9,6 +9,19 @@ import SocialIcons from './SocialIcons.astro'
 const isExternalLink = (href: string) => {
 	return href.startsWith('http')
 }
+const LINK_CLASSES = {
+	highlighted:
+		'text-primary hover:text-primary/80 group flex items-center gap-1.5 text-sm font-medium capitalize transition-colors',
+	default:
+		'text-muted-foreground hover:text-primary group flex items-center gap-1.5 text-sm capitalize transition-colors'
+}
+
+const ICON_CLASSES = {
+	highlighted:
+		'text-primary size-3 flex-shrink-0 opacity-80 transition-opacity group-hover:opacity-100',
+	default:
+		'group-hover:text-primary size-3 flex-shrink-0 opacity-70 transition-colors group-hover:opacity-100'
+}
 ---
 
 <footer class="bg-background/80 border-border/50 border-t backdrop-blur-md">
@@ -52,8 +65,8 @@ const isExternalLink = (href: string) => {
 										href={item.href}
 										class={
 											isHighlighted ?
-												'text-primary hover:text-primary/80 group flex items-center gap-1.5 text-sm font-medium capitalize transition-colors'
-											:	'text-muted-foreground hover:text-primary group flex items-center gap-1.5 text-sm capitalize transition-colors'
+												LINK_CLASSES.highlighted
+											:	LINK_CLASSES.default
 										}
 									>
 										<span>{item.label}</span>
@@ -62,8 +75,8 @@ const isExternalLink = (href: string) => {
 												name="lucide:external-link"
 												class={
 													isHighlighted ?
-														'text-primary size-3 flex-shrink-0 opacity-80 transition-opacity group-hover:opacity-100'
-													:	'group-hover:text-primary size-3 flex-shrink-0 opacity-70 transition-colors group-hover:opacity-100'
+														ICON_CLASSES.highlighted
+													:	ICON_CLASSES.default
 												}
 												aria-hidden="true"
 											/>

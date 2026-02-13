@@ -329,27 +329,31 @@ try {
 				})
 
 				let tick = false
-				window.addEventListener('scroll', () => {
-					if (!tick) {
-						window.requestAnimationFrame(() => {
-							const footerRect = footer.getBoundingClientRect()
-							const isFooterVisible = footerRect.top <= window.innerHeight
+				window.addEventListener(
+					'scroll',
+					() => {
+						if (!tick) {
+							window.requestAnimationFrame(() => {
+								const footerRect = footer.getBoundingClientRect()
+								const isFooterVisible = footerRect.top <= window.innerHeight
 
-							scrollToTopButton.classList.toggle(
-								'hidden',
-								window.scrollY <= 300 || isFooterVisible
-							)
-							tick = false
-						})
-						tick = true
-					}
-				})
+								scrollToTopButton.classList.toggle(
+									'hidden',
+									window.scrollY <= 300 || isFooterVisible
+								)
+								tick = false
+							})
+							tick = true
+						}
+					},
+					{ passive: true }
+				)
 			}
 		})
 	</script>
 </Layout>
 
-<script>
+<script is:inline>
 	document.addEventListener('astro:page-load', () => {
 		if (document.querySelector('.katex')) {
 			if (!document.querySelector('link[href*="katex.min.css"]')) {

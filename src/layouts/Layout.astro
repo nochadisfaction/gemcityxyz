@@ -14,6 +14,12 @@ interface Props {
 }
 
 const { class: className } = Astro.props
+
+declare global {
+	interface Window {
+		__preventSamePageNav?: boolean
+	}
+}
 ---
 
 <!doctype html>

@@ -110,10 +110,17 @@ import { Icon } from 'astro-icon/components'
 									[Loading...]
 								</code>
 								<script is:inline define:vars={{ email: DEAD_DROP.email }}>
-									const el = document.getElementById('dd-email');
-									if (el) {
-										el.innerText = email;
-									}
+									// Simple obfuscation: split email to avoid static analysis
+									const parts = email.split('@');
+									const user = parts[0];
+									const domain = parts[1];
+									
+									document.addEventListener('astro:page-load', () => {
+										const el = document.getElementById('dd-email');
+										if (el) {
+											el.innerText = user + '@' + domain;
+										}
+									});
 								</script>
 							</p>
 						</li>

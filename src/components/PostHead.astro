@@ -79,7 +79,7 @@ const articleSchema = {
 <meta property="article:modified_time" content={modifiedTime} />
 <meta property="article:author" content={author} />
 {
-	post?.data.tags &&
+	post.data.tags &&
 		post.data.tags.map((tag: string) => {
 			return <meta property="article:tag" content={tag} />
 		})

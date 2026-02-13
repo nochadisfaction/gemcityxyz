@@ -53,7 +53,7 @@ gemcity/
 
 - ❌ All personal blog posts (kept only hello-world example)
 - ❌ Personal author profile (kept example-author)
-- ❌ Personal images (reworkedmeroxdc1.*, robert-melcher-cv.pdf)
+- ❌ Personal images and documents
 - ❌ Tools section (pages, components, API routes)
 - ❌ Dictionary section
 - ❌ Personal references in code
