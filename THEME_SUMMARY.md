@@ -1,4 +1,4 @@
-# merox-erudite Theme - Summary
+# Gem City Theme - Summary
 
 ## ✅ Theme Preparation Complete
 
@@ -7,7 +7,7 @@ The theme has been prepared and is ready for GitHub distribution.
 ## 📁 Structure
 
 ```bash
-merox-erudite/
+gemcity/
 ├── src/                    # Source code
 │   ├── components/         # Astro & React components
 │   ├── content/           # Content (blog, authors, projects)

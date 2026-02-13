@@ -11,6 +11,7 @@ export type Site = {
 export type SocialLink = {
   href: string
   label: string
+  highlight?: boolean
 }
 
 export type IconMap = {

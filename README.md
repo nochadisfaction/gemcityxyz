@@ -1,8 +1,8 @@
-# merox-erudite
+# Gem City
 
-[![License](https://img.shields.io/github/license/meroxdotdev/merox-erudite?color=0a0a0a&logo=github&logoColor=fff&style=for-the-badge)](LICENSE)
+[![License](https://img.shields.io/github/license/nochadisfaction/gemcityxyz?color=0a0a0a&logo=github&logoColor=fff&style=for-the-badge)](LICENSE)
 
-**merox-erudite** is a customized version of the [astro-erudite](https://github.com/jktrn/astro-erudite) theme, enhanced with additional features and modifications for a more complete blogging experience.
+**Gem City** is a customized version of the [astro-erudite](https://github.com/jktrn/astro-erudite) theme, enhanced with additional features and modifications for a more complete blogging experience.
 
 > **📖 Want to learn more about the original theme?**  
 > This theme is based on [astro-erudite](https://github.com/jktrn/astro-erudite) by [@jktrn](https://github.com/jktrn). For detailed documentation, architecture details, and the original design philosophy, visit the [official astro-erudite repository](https://github.com/jktrn/astro-erudite).
@@ -258,6 +258,6 @@ For comprehensive documentation, detailed feature explanations, and the original
 
 ---
 
-Built with ❤️ by [merox](https://merox.dev)
+Built with ❤️ by [vivi](https://gemcity.xyz)
 
 *Developed using [Cursor](https://cursor.sh/) AI coding assistant*

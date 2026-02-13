@@ -1,6 +1,6 @@
-# Contributing to merox-erudite
+# Contributing to Gem City
 
-Thank you for your interest in contributing to merox-erudite! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to Gem City! This document provides guidelines and instructions for contributing.
 
 ## Development Transparency
 
