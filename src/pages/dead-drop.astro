@@ -109,19 +109,27 @@ import { Icon } from 'astro-icon/components'
 								<code class="bg-muted rounded px-1" id="dd-email">
 									[Loading...]
 								</code>
-								<script is:inline define:vars={{ email: DEAD_DROP.email }}>
-									// Simple obfuscation: split email to avoid static analysis
-									const parts = email.split('@');
-									const user = parts[0];
-									const domain = parts[1];
-									
-									document.addEventListener('astro:page-load', () => {
-										const el = document.getElementById('dd-email');
-										if (el) {
-											el.innerText = user + '@' + domain;
-										}
-									});
-								</script>
+								{
+									(() => {
+										// Character code obfuscation to prevent literal address in source
+										const emailCodes = JSON.stringify(
+											[...DEAD_DROP.email].map((c) => c.charCodeAt(0))
+										)
+										return (
+											<script is:inline define:vars={{ emailCodes }}>
+												document.addEventListener('astro:page-load', () => {
+													const decoded = JSON.parse(emailCodes)
+														.map((c) => String.fromCharCode(c))
+														.join('')
+													const el = document.getElementById('dd-email')
+													if (el) {
+														el.innerText = decoded
+													}
+												})
+											</script>
+										)
+									})()
+								}
 							</p>
 						</li>
 					</ol>

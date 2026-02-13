@@ -1,6 +1,6 @@
 ---
 import Link from '@/components/Link.astro'
-import { NAV_LINKS, SITE, SOCIAL_LINKS } from '@/consts'
+import { DEAD_DROP, NAV_LINKS, SITE, SOCIAL_LINKS } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import { ErrorBoundary } from './react/ErrorBoundary'
 import Newsletter from './react/Newsletter'
@@ -104,13 +104,17 @@ const ICON_CLASSES = {
 						>
 							Terms of Service
 						</Link>
-						<Link
-							href="/dead-drop"
-							class="text-muted-foreground hover:text-primary flex items-center gap-1.5 text-sm transition-colors"
-						>
-							<Icon name="lucide:shield-check" class="size-3" />
-							Dead Drop
-						</Link>
+						{
+							DEAD_DROP.enabled && (
+								<Link
+									href="/dead-drop"
+									class="text-muted-foreground hover:text-primary flex items-center gap-1.5 text-sm transition-colors"
+								>
+									<Icon name="lucide:shield-check" class="size-3" />
+									Dead Drop
+								</Link>
+							)
+						}
 					</nav>
 				</div>
 

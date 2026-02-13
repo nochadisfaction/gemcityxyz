@@ -161,6 +161,8 @@ const pageUrl = url || Astro.url.href
 
 		// Intersection Observer for lazy loading
 		const initObserver = () => {
+			if (!disqusContainer) return
+
 			// Check if IntersectionObserver is supported
 			if (!('IntersectionObserver' in window)) {
 				// Fallback: load immediately if IntersectionObserver not supported
@@ -195,26 +197,7 @@ const pageUrl = url || Astro.url.href
 
 		// Handle Astro view transitions
 		if (typeof window !== 'undefined') {
-			// Reset on page navigation (Astro view transitions)
-			// Reset on page navigation (Astro view transitions)
-			document.addEventListener('astro:page-load', () => {
-				isLoaded = false
-				isLoading = false
-				disqusContainer = document.getElementById('disqus_thread')
-				loadingIndicator = document.getElementById('disqus-loading')
-
-				if (loadingIndicator) {
-					loadingIndicator.style.display = 'flex'
-					loadingIndicator.innerHTML = '<span>Loading comments...</span>'
-				}
-				// Re-initialize observer for new page
-				if (disqusContainer) {
-					setTimeout(initObserver, 100)
-				}
-			})
-
-			// Also handle after-swap for compatibility
-			document.addEventListener('astro:after-swap', () => {
+			const resetDisqus = () => {
 				isLoaded = false
 				isLoading = false
 				disqusContainer = document.getElementById('disqus_thread')
@@ -227,7 +210,11 @@ const pageUrl = url || Astro.url.href
 				if (disqusContainer) {
 					setTimeout(initObserver, 100)
 				}
-			})
+			}
+
+			// Reset on page navigation (Astro view transitions)
+			document.addEventListener('astro:page-load', resetDisqus)
+			document.addEventListener('astro:after-swap', resetDisqus)
 		}
 	})()
 </script>
